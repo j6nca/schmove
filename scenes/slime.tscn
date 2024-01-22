@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4okvp04yp2fe"]
+
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_s7hk7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4n67e"]
+size = Vector2(6, 6)
+
+[node name="Slime" type="RigidBody2D"]
+script = ExtResource("1_s7hk7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_4n67e")
+
+[node name="Self_Detonate_Timer" type="Timer" parent="."]
+autostart = true
