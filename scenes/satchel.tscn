@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4okvp04yp2fe"]
+[gd_scene load_steps=3 format=3 uid="uid://dsonacup27li4"]
 
-[ext_resource type="Script" path="res://scripts/slime.gd" id="1_s7hk7"]
+[ext_resource type="Script" path="res://scripts/satchel.gd" id="1_i4atl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4n67e"]
 size = Vector2(6, 6)
 
-[node name="Slime" type="RigidBody2D"]
+[node name="Satchel" type="RigidBody2D"]
 collision_layer = 0
 collision_mask = 0
-script = ExtResource("1_s7hk7")
+script = ExtResource("1_i4atl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 

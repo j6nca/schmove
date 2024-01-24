@@ -8,7 +8,7 @@ const BASE_SLIME_CHARGES = 2
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var character : CharacterBody2D = $Player
-@onready var Slime = preload("res://scenes/slime.tscn")
+@onready var Satchel = preload("res://scenes/satchel.tscn")
 @onready var world = get_node("/root/World")
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -59,10 +59,10 @@ func _physics_process(delta):
 
 func throw():
 	print("throwing slime...")
-	var slime = Slime.instantiate()
-	world.add_child(slime)
+	var satchel = Satchel.instantiate()
+	world.add_child(satchel)
 	var throw_direction = (get_global_mouse_position() - global_position).normalized()
 	print(throw_direction)
-	slime.position = Vector2(position.x + last_direction * 10, position.y)
-	slime.velocity = slime.BASE_THROW_SPEED * throw_direction
+	satchel.position = Vector2(position.x + last_direction * 10, position.y)
+	satchel.velocity = satchel.BASE_THROW_SPEED * throw_direction
 	
