@@ -4,9 +4,11 @@ extends CharacterBody2D
 const BASE_SPEED = 100.0
 const BASE_JUMP_VELOCITY = -200.0
 const BASE_SLIME_CHARGES = 2
+const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var sprite : Sprite2D = $Sprite2D
+@onready var shader = preload("res://assets/shaders/entity.gdshader")
 @onready var character : CharacterBody2D = $Player
 @onready var Satchel = preload("res://scenes/satchel.tscn")
 @onready var world = get_node("/root/World")
@@ -18,9 +20,15 @@ var jump_velocity = BASE_JUMP_VELOCITY
 var slime_charges = BASE_SLIME_CHARGES
 
 func _ready():
+	# Set collision data
 	set_collision_layer_value(2, true)
 	set_collision_mask_value(2, true)
 
+	# Set shaders
+	sprite.material = ShaderMaterial.new()
+	sprite.material.shader = shader
+	sprite.material.set_shader_parameter("color", BASE_OUTLINE)
+	
 func update_animation_parameters():
 	if(velocity == Vector2.ZERO):
 		animation_tree["parameters/conditions/idle"] = true
@@ -33,7 +41,7 @@ func _process(delta):
 	update_animation_parameters()
 	sprite.scale.x = last_direction
 	if Input.is_action_just_pressed("throw"):
-		throw()
+		satchel()
 		
 
 func _physics_process(delta):
@@ -57,7 +65,8 @@ func _physics_process(delta):
 
 	move_and_slide()
 
-func throw():
+func satchel():
+	
 	print("throwing slime...")
 	var satchel = Satchel.instantiate()
 	world.add_child(satchel)

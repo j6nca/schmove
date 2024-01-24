@@ -1,16 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://66lfmcnqij5r"]
+[gd_scene load_steps=18 format=3 uid="uid://66lfmcnqij5r"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_6qkak"]
-[ext_resource type="Shader" path="res://assets/shaders/entity.gdshader" id="1_f8ian"]
 [ext_resource type="Texture2D" uid="uid://cvqjqri21ai4q" path="res://assets/sprites/player.png" id="1_h74lq"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yikhr"]
-shader = ExtResource("1_f8ian")
-shader_parameter/color = Color(0.243137, 0.243137, 0.243137, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 0
-shader_parameter/inside = false
-shader_parameter/add_margins = true
 
 [sub_resource type="Animation" id="Animation_kktjj"]
 length = 0.001
@@ -120,10 +111,10 @@ collision_mask = 0
 script = ExtResource("1_6qkak")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_yikhr")
 texture = ExtResource("1_h74lq")
 hframes = 4
 vframes = 2
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
