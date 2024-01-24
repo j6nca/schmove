@@ -13,7 +13,8 @@ const BASE_LIVE_CHARGES = 1
 @onready var shader = preload("res://assets/shaders/entity.gdshader")
 @onready var character : CharacterBody2D = $Player
 @onready var Satchel = preload("res://scenes/satchel.tscn")
-
+@onready var explosion_timer : Timer = $Explosion_Timer
+@onready var recharge_timer : Timer = $Recharge_Timer
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var last_direction = 1
@@ -22,16 +23,25 @@ var jump_velocity = BASE_JUMP_VELOCITY
 var slime_charges = BASE_SLIME_CHARGES
 var max_charges = BASE_MAX_CHARGES
 var base_live_charges = BASE_LIVE_CHARGES
+var available_charges = BASE_MAX_CHARGES
+var explosion = Vector2.ZERO
+
+func set_explosion(force: Vector2):
+	explosion = force
+	explosion_timer.wait_time = 0.1
+	explosion_timer.start()
 
 func _ready():
 	# Set collision data
 	set_collision_layer_value(2, true)
 	set_collision_mask_value(2, true)
-
 	# Set shaders
 	sprite.material = ShaderMaterial.new()
 	sprite.material.shader = shader
 	sprite.material.set_shader_parameter("color", BASE_OUTLINE)
+	# Start recharge timer
+	recharge_timer.wait_time = 2
+	recharge_timer.start()
 	
 func update_animation_parameters():
 	if(velocity == Vector2.ZERO):
@@ -47,7 +57,6 @@ func _process(delta):
 	if Input.is_action_just_pressed("throw"):
 		satchel()
 		
-
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -55,18 +64,16 @@ func _physics_process(delta):
 
 	# Handle Jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = jump_velocity
+		velocity.y += jump_velocity
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input = Input.get_axis("move_left", "move_right")
 	var direction = sign((get_global_mouse_position() - global_position).x)
-	if direction:
-		last_direction = direction
-		velocity.x = input * speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
-
+	last_direction = direction
+	velocity.x = input * speed
+	velocity += explosion
+	
 	move_and_slide()
 
 func satchel():
@@ -76,7 +83,7 @@ func satchel():
 		print("satchel exists")
 		for satchel in satchels:
 			satchel.detonate()
-	else:
+	elif available_charges > 0:
 		print("throwing slime...")
 		var satchel = Satchel.instantiate()
 		get_parent().add_child(satchel)
@@ -84,4 +91,14 @@ func satchel():
 		print(throw_direction)
 		satchel.position = Vector2(position.x + last_direction * 10, position.y)
 		satchel.velocity = satchel.BASE_THROW_SPEED * throw_direction
+		available_charges -= 1
 	
+func _on_explosion_timer_timeout():
+	explosion = Vector2.ZERO
+
+func _on_recharge_timer_timeout():
+	if available_charges < max_charges:
+		print("Charge refilled")
+		available_charges += 1
+	print("Charge full")
+	recharge_timer.start() # Replace with function body.

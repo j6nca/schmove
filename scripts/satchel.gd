@@ -4,12 +4,14 @@ extends RigidBody2D
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite2D
 @onready var shader = preload("res://assets/shaders/entity.gdshader")
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * 0.5
 var velocity = Vector2.ZERO
+var explosion_strength = BASE_EXPLOSION_STRENGTH
 
 const BASE_THROW_SPEED = 150
 const BASE_TIME_TO_DETONATE = 3
 const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)
+const BASE_EXPLOSION_STRENGTH = 50.0
 
 func _ready():
 	# Add satchel instances to a group - there should only be one at a time
@@ -35,6 +37,13 @@ func _physics_process(delta):
 	
 func detonate():
 	#detonate logic here
+	var player_pos = get_parent().get_node("Player").global_position
+	var explosion_vector = player_pos - global_position
+	#explosion_vector = Vector2(explosion_vector.x, -explosion_vector.y)
+	# print("satchel: ", global_position)
+	# print("player: ", player_pos)
+	#print("resulting", explosion_vector)
+	get_parent().get_node("Player").set_explosion(explosion_vector.normalized() * explosion_strength)
 	queue_free()
 
 func _on_self_detonate_timer_timeout():

@@ -114,6 +114,7 @@ script = ExtResource("1_6qkak")
 texture = ExtResource("1_h74lq")
 hframes = 4
 vframes = 2
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -135,3 +136,11 @@ parameters/walk/blend_position = -0.953453
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(5, 5)
+
+[node name="Explosion_Timer" type="Timer" parent="."]
+wait_time = 0.25
+
+[node name="Recharge_Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Explosion_Timer" to="." method="_on_explosion_timer_timeout"]
+[connection signal="timeout" from="Recharge_Timer" to="." method="_on_recharge_timer_timeout"]
