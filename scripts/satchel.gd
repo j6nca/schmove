@@ -12,6 +12,8 @@ const BASE_TIME_TO_DETONATE = 3
 const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)
 
 func _ready():
+	# Add satchel instances to a group - there should only be one at a time
+	add_to_group("satchels")
 	# Set base constants
 	velocity = BASE_THROW_SPEED * velocity
 	# Set collision data

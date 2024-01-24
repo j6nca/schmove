@@ -11,7 +11,7 @@ const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)
 @onready var shader = preload("res://assets/shaders/entity.gdshader")
 @onready var character : CharacterBody2D = $Player
 @onready var Satchel = preload("res://scenes/satchel.tscn")
-@onready var world = get_node("/root/World")
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var last_direction = 1
@@ -66,12 +66,16 @@ func _physics_process(delta):
 	move_and_slide()
 
 func satchel():
-	
-	print("throwing slime...")
-	var satchel = Satchel.instantiate()
-	world.add_child(satchel)
-	var throw_direction = (get_global_mouse_position() - global_position).normalized()
-	print(throw_direction)
-	satchel.position = Vector2(position.x + last_direction * 10, position.y)
-	satchel.velocity = satchel.BASE_THROW_SPEED * throw_direction
+	# Check if satchel exists, if so, then follow up action is to detonate, else throw satchel
+	if get_tree().get_nodes_in_group("satchels").size() > 0:
+		print("satchel exists")
+		get_tree().get_nodes_in_group("satchels")[0].detonate()
+	else:
+		print("throwing slime...")
+		var satchel = Satchel.instantiate()
+		get_parent().add_child(satchel)
+		var throw_direction = (get_global_mouse_position() - global_position).normalized()
+		print(throw_direction)
+		satchel.position = Vector2(position.x + last_direction * 10, position.y)
+		satchel.velocity = satchel.BASE_THROW_SPEED * throw_direction
 	
