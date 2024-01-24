@@ -6,7 +6,7 @@ extends RigidBody2D
 @onready var shader = preload("res://assets/shaders/entity.gdshader")
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var velocity = Vector2.ZERO
-const BASE_MAX_CHARGES = 2
+
 const BASE_THROW_SPEED = 150
 const BASE_TIME_TO_DETONATE = 3
 const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)

@@ -5,6 +5,8 @@ const BASE_SPEED = 100.0
 const BASE_JUMP_VELOCITY = -200.0
 const BASE_SLIME_CHARGES = 2
 const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)
+const BASE_MAX_CHARGES = 2
+const BASE_LIVE_CHARGES = 1
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var sprite : Sprite2D = $Sprite2D
@@ -18,6 +20,8 @@ var last_direction = 1
 var speed = BASE_SPEED
 var jump_velocity = BASE_JUMP_VELOCITY
 var slime_charges = BASE_SLIME_CHARGES
+var max_charges = BASE_MAX_CHARGES
+var base_live_charges = BASE_LIVE_CHARGES
 
 func _ready():
 	# Set collision data
@@ -67,9 +71,11 @@ func _physics_process(delta):
 
 func satchel():
 	# Check if satchel exists, if so, then follow up action is to detonate, else throw satchel
-	if get_tree().get_nodes_in_group("satchels").size() > 0:
+	var satchels = get_tree().get_nodes_in_group("satchels")
+	if satchels.size() + 1 > base_live_charges:
 		print("satchel exists")
-		get_tree().get_nodes_in_group("satchels")[0].detonate()
+		for satchel in satchels:
+			satchel.detonate()
 	else:
 		print("throwing slime...")
 		var satchel = Satchel.instantiate()
