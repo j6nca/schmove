@@ -5,10 +5,10 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_askkj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1t5fi"]
-size = Vector2(549, 20)
+size = Vector2(852, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swnse"]
-size = Vector2(20, 222.75)
+size = Vector2(20, 53.8125)
 
 [node name="World" type="Node2D"]
 
@@ -18,7 +18,7 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 material = SubResource("CanvasItemMaterial_askkj")
-position = Vector2(0, 55)
+position = Vector2(10, 55)
 shape = SubResource("RectangleShape2D_1t5fi")
 
 [node name="Wall" type="StaticBody2D" parent="."]
@@ -27,12 +27,12 @@ collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
 material = SubResource("CanvasItemMaterial_askkj")
-position = Vector2(-264, -68.375)
+position = Vector2(-128, 15.9063)
 shape = SubResource("RectangleShape2D_swnse")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Wall"]
 material = SubResource("CanvasItemMaterial_askkj")
-position = Vector2(264, -70.75)
+position = Vector2(133, 17)
 shape = SubResource("RectangleShape2D_swnse")
 
 [node name="Player" parent="." instance=ExtResource("1_aww8d")]
