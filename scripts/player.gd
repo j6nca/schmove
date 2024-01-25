@@ -3,9 +3,9 @@ extends CharacterBody2D
 
 const BASE_SPEED = 100.0
 const BASE_JUMP_VELOCITY = -200.0
-const BASE_SLIME_CHARGES = 2
+const BASE_SLIME_CHARGES = BASE_MAX_CHARGES
 const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)
-const BASE_MAX_CHARGES = 2
+const BASE_MAX_CHARGES = 12
 const BASE_LIVE_CHARGES = 1
 
 @onready var animation_tree : AnimationTree = $AnimationTree
@@ -100,5 +100,6 @@ func _on_recharge_timer_timeout():
 	if available_charges < max_charges:
 		print("Charge refilled")
 		available_charges += 1
-	print("Charge full")
+	else:
+		print("Charge full")
 	recharge_timer.start() # Replace with function body.

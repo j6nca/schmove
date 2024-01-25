@@ -37,13 +37,16 @@ func _physics_process(delta):
 	
 func detonate():
 	#detonate logic here
+	remove_from_group("satchels")
 	var player_pos = get_parent().get_node("Player").global_position
 	var explosion_vector = player_pos - global_position
-	#explosion_vector = Vector2(explosion_vector.x, -explosion_vector.y)
+	explosion_vector = Vector2(explosion_vector.x, explosion_vector.y)
 	# print("satchel: ", global_position)
 	# print("player: ", player_pos)
 	#print("resulting", explosion_vector)
 	get_parent().get_node("Player").set_explosion(explosion_vector.normalized() * explosion_strength)
+	animation_player.play("explosion")
+	await animation_player.animation_finished
 	queue_free()
 
 func _on_self_detonate_timer_timeout():
