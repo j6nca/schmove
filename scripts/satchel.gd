@@ -39,12 +39,12 @@ func detonate():
 	#detonate logic here
 	remove_from_group("satchels")
 	var player_pos = get_parent().get_node("Player").global_position
-	var explosion_vector = player_pos - global_position
-	explosion_vector = Vector2(explosion_vector.x, explosion_vector.y)
+	var explosion_vector = (player_pos - global_position).normalized()
+	explosion_vector = Vector2(explosion_vector.x * 10, explosion_vector.y)
 	# print("satchel: ", global_position)
 	# print("player: ", player_pos)
 	#print("resulting", explosion_vector)
-	get_parent().get_node("Player").set_explosion(explosion_vector.normalized() * explosion_strength)
+	get_parent().get_node("Player").set_explosion(explosion_vector * explosion_strength)
 	animation_player.play("explosion")
 	await animation_player.animation_finished
 	queue_free()

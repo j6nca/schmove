@@ -5,7 +5,7 @@ const BASE_SPEED = 100.0
 const BASE_JUMP_VELOCITY = -200.0
 const BASE_SLIME_CHARGES = BASE_MAX_CHARGES
 const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)
-const BASE_MAX_CHARGES = 12
+const BASE_MAX_CHARGES = 102
 const BASE_LIVE_CHARGES = 1
 
 @onready var animation_tree : AnimationTree = $AnimationTree
@@ -89,7 +89,7 @@ func satchel():
 		get_parent().add_child(satchel)
 		var throw_direction = (get_global_mouse_position() - global_position).normalized()
 		print(throw_direction)
-		satchel.position = Vector2(position.x + last_direction * 10, position.y)
+		satchel.position = Vector2(position.x, position.y)
 		satchel.velocity = satchel.BASE_THROW_SPEED * throw_direction
 		available_charges -= 1
 	
