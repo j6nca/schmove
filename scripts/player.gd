@@ -32,9 +32,11 @@ func set_explosion(force: Vector2):
 	explosion_timer.start()
 
 func _ready():
+	add_to_group("player")
 	# Set collision data
 	set_collision_layer_value(2, true)
-	set_collision_mask_value(2, true)
+	set_collision_mask_value(1, true)
+
 	# Set shaders
 	sprite.material = ShaderMaterial.new()
 	sprite.material.shader = shader
@@ -54,10 +56,10 @@ func update_animation_parameters():
 func _process(delta):
 	update_animation_parameters()
 	sprite.scale.x = last_direction
-	if Input.is_action_just_pressed("throw"):
-		satchel()
 		
 func _physics_process(delta):
+	if Input.is_action_just_pressed("throw"):
+		satchel()
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -78,6 +80,8 @@ func _physics_process(delta):
 
 func satchel():
 	# Check if satchel exists, if so, then follow up action is to detonate, else throw satchel
+	# TODO: have an area of effect for satchel vector
+	# TODO: only move player if satchel can see player (ray cast?)
 	var satchels = get_tree().get_nodes_in_group("satchels")
 	if satchels.size() + 1 > base_live_charges:
 		print("satchel exists")

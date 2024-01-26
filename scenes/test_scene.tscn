@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://pcitrnmac0hg"]
+[gd_scene load_steps=6 format=3 uid="uid://pcitrnmac0hg"]
 
 [ext_resource type="PackedScene" uid="uid://66lfmcnqij5r" path="res://scenes/player.tscn" id="1_aww8d"]
 
@@ -10,11 +10,13 @@ size = Vector2(852, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_swnse"]
 size = Vector2(20, 53.8125)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_syq1g"]
+size = Vector2(93, 15)
+
 [node name="World" type="Node2D"]
 
 [node name="Floor" type="StaticBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
 material = SubResource("CanvasItemMaterial_askkj")
@@ -22,8 +24,7 @@ position = Vector2(10, 55)
 shape = SubResource("RectangleShape2D_1t5fi")
 
 [node name="Wall" type="StaticBody2D" parent="."]
-collision_layer = 3
-collision_mask = 3
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
 material = SubResource("CanvasItemMaterial_askkj")
@@ -36,3 +37,14 @@ position = Vector2(133, 17)
 shape = SubResource("RectangleShape2D_swnse")
 
 [node name="Player" parent="." instance=ExtResource("1_aww8d")]
+
+[node name="Platforms" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platforms"]
+position = Vector2(216, -54)
+shape = SubResource("RectangleShape2D_syq1g")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Platforms"]
+position = Vector2(49, -55)
+shape = SubResource("RectangleShape2D_syq1g")
