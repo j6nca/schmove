@@ -11,6 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * 0.25
 var velocity = Vector2.ZERO
 var explosion_strength = BASE_EXPLOSION_STRENGTH
 var in_player_vicinity = false
+var in_player_los = false
 
 const BASE_THROW_SPEED = 150
 const BASE_TIME_TO_DETONATE = 3
@@ -32,8 +33,6 @@ func _ready():
 	var shape = CircleShape2D.new()
 	shape.radius = BASE_EXPLOSION_RADIUS
 	explosion_shape.shape = shape
-	raycast.enabled
-	raycast.cast
 	# Set animation
 	animation_player.play("idle")
 	# Set timer
@@ -47,6 +46,12 @@ func _ready():
 func _physics_process(delta):
 	velocity.y += gravity * delta
 	move_and_collide(velocity * delta)
+	raycast.set_target_position(get_parent().get_node("Player").position - position)
+	if raycast.is_colliding():
+		in_player_los = false
+	else:
+		in_player_los = true
+		
 	
 func detonate():
 	#detonate logic here
@@ -58,7 +63,7 @@ func detonate():
 	# print("player: ", player_pos)
 	#print("resulting", explosion_vector)
 	print(in_player_vicinity)
-	if in_player_vicinity:
+	if in_player_vicinity and in_player_los:
 		get_parent().get_node("Player").set_explosion(explosion_vector * explosion_strength)
 		
 	animation_player.play("explosion")
