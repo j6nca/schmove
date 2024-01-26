@@ -7,6 +7,7 @@ const BASE_SLIME_CHARGES = BASE_MAX_CHARGES
 const BASE_OUTLINE = Vector4(0.2, 0.2, 0.2, 1.0)
 const BASE_MAX_CHARGES = 102
 const BASE_LIVE_CHARGES = 1
+const BASE_THROW_VELOCITY = Vector2(10,0)
 
 @onready var animation_tree : AnimationTree = $AnimationTree
 @onready var sprite : Sprite2D = $Sprite2D
@@ -94,7 +95,7 @@ func satchel():
 		var throw_direction = (get_global_mouse_position() - global_position).normalized()
 		print(throw_direction)
 		satchel.position = Vector2(position.x, position.y)
-		satchel.velocity = satchel.BASE_THROW_SPEED * throw_direction
+		satchel.velocity = satchel.BASE_THROW_SPEED * throw_direction + BASE_THROW_VELOCITY
 		available_charges -= 1
 	
 func _on_explosion_timer_timeout():

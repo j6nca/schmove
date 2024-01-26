@@ -7,7 +7,7 @@ extends RigidBody2D
 @onready var explosion_shape : CollisionShape2D = $Explosion_Area/Explosion_Shape
 @onready var raycast : RayCast2D = $RayCast2D
 @onready var shader = preload("res://assets/shaders/entity.gdshader")
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * 0.25
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * 0.1
 var velocity = Vector2.ZERO
 var explosion_strength = BASE_EXPLOSION_STRENGTH
 var in_player_vicinity = false

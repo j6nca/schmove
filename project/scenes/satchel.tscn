@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://dsonacup27li4"]
 
 [ext_resource type="Script" path="res://scripts/satchel.gd" id="1_i4atl"]
-[ext_resource type="Texture2D" path="res://assets/sprites/satchel.png" id="2_5efio"]
+[ext_resource type="Texture2D" uid="uid://g5tvgqgur6ht" path="res://assets/sprites/satchel.png" id="2_5efio"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4n67e"]
 size = Vector2(6, 6)
